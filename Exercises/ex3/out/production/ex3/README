@@ -1,0 +1,134 @@
+yair.shtern
+318442241
+
+********************************
+*       File description       *
+********************************
+BrickerGameManager.java - the main class that extends GameManager, initialize the game and
+                            all the game objects starts it running.
+
+package - brick_strategies: contains all the brick collision strategies.
+    CollisionStrategy.java - interface for brick collision strategies. hes 2 methods: coCollision and
+                            getGameObjectCollection.
+    RemoveBrickStrategy.java - implements CollisionStrategy. basic strategy that brake the brick on collision.
+    RemoveBrickStrategyDecorator.java - an abstract decorator that implements CollisionStrategy.
+                            Allow to add functionality to the remove brick strategy.
+    AddPaddleStrategy.java - extending abstract RemoveBrickStrategyDecorator and implements
+                            CollisionStrategy. it's add a paddle on collision.
+    ChangeCameraStrategy.java - extending abstract RemoveBrickStrategyDecorator and implements
+                            CollisionStrategy. it's makes the camara to focus on the ball game on collision.
+    PuckStrategy.java - extending abstract RemoveBrickStrategyDecorator and implements
+                            CollisionStrategy. it's add 3 pucks on collision.
+    ReduceAndExpandStrategy.java - extending abstract RemoveBrickStrategyDecorator and implements
+                            CollisionStrategy. it's add or statusDefiner object that expend the paddle when
+                            it's collide with it, or statusDefiner object that reduce the paddle when it's
+                            collide with it
+    DoubleBehavior.java - implements CollisionStrategy, contains 2 or 3 strategies.
+    BrickStrategyFactory.java - manage the collision strategies. hes main function getStrategy that return
+                            some strategy from the above or combination of them (max 3).
+
+package - gameobjects: - contains all the game objects.
+    Ball.java - extends GameObject. the main ball of the program, gets a counter that count his collisions,
+                        and when collide it's flipped to the normal of the collision direction.
+    BallCollisionCountdownAgent.java - extends GameObject. counts the ball (given as a parameter) collisions
+                        if it's collide num of times that given as a parameter, change the camera to default.
+    Brick.java - extends GameObject. create a brick with specific collision strategy.
+    GraphicLifeCounter.java - extends GameObject. create a graphic life counter that removed when the
+                        life counter value (given as a parameter) are as the parameter it gets.
+    NumericLifeCounter.java - extends GameObject. numeric life counter that updates when the life counter
+                        (given as a parameter) changed.
+    Paddle.java - extend GameObject. create paddle that can move right or left
+                        (with some limits of the window) according the keyboard arrows.
+    MockPaddle.java - extend Paddle. hes similar functionality but its not the main paddle.
+                        after 3 collisions its removed.
+    Puck.java - extend Ball. hes similar functionality but its not the main bale.
+    StatusDefiner.java - extends GameObject. an object that fall from the center of the window and if it's
+                        collide with a paddle something happens (depend on the specific status object).
+
+package - algo_questions:
+    Solutions.java - solutions for algo questions.
+
+README
+
+********************************
+*    Implementation details    *
+********************************
+AddPaddle:
+When there is collision, if there is no mock paddle on the window i create mock paddle.
+The mock paddle itself remove itself after 3 collisions.
+
+ChangeCamera:
+When there is collision, if the camera is null (on default) I search for the main ball in the game objects
+and set the camera to follow after it. I also create a countdown agent that will know when to return the
+camera to the default.
+
+Pucks:
+When there is collision, 3 puck balls falling down creates, falling left, right and straight.
+I chose to place the balls a bit lower from the braking brick so that they will not brick
+automatically more bricks.
+
+ReduceAndExpend:
+When there is collision, I'm randomly choose status that expend or status that reduce the paddle
+when there collide. I chose to create a function that the status called when he collide with a paddle,
+so in this class wen it called the function checks (according to a variable kept) and expend or
+reduce the paddle.
+
+DoubleBehavior:
+Gets an array of 2 or 3 behaviors to implement on collision.
+In onCollision I call for each behavior and update the counter.
+
+Factory:
+In getStrategy I randomly choose a number between 0 and 5, if it turns out to be 0
+I randomly choose a number between 0 and 4 (except for zero functionality) - if it comes out again 0
+then I send to the double behavior 3 strategies out of 5 randomly selected.
+Otherwise I send 2.
+Else (another number comes out) I return a single randomly selected strategy.
+
+********************************
+*            design            *
+********************************
+Every brick gets a collision strategy object that implement the CollisionStrategy interface. In addition
+(except to the RemoveBrickStrategy) every collision strategy extends the abstract RemoveBrickStrategyDecorator
+class. which gets a RemoveBrickStrategy and implements the interface on it, so that every strategy actually
+contains a RemoveBrickStrategy object and just adds to it.
+
+********************************
+*          algorithms          *
+********************************
+alotStudyTime:
+A Greedy Algorithm.
+1) Sort the two arrays and initialize counter.
+2) Go through all the tasks from the shortest foreword and to find a slot,
+    if there is a slot big enough - update the counter and continue to the next task.
+    In the next iteration start from the slot after the slot found for the previous task
+    because that the arrays are sorted and the next task bigger (or equal) then the previous
+    so smaller slots arent going to fit.
+3) When we reach the end of the tasks array return the counter.
+Running time: O(nlog(n)) (when n is the length of the bigger array), for the sort + O(n + m) -
+    go over the two arrays. In total O(nlog(n)).
+
+minLeap:
+A Greedy Algorithm.
+1) Initialize counter.
+2) Go through the array. For each leaf go through the leaves that can be reached and go to the most
+    'profitable' leaf - the leaf with the biggest jump range and increment the counter by 1.
+    On every iteration check if we can jump to the end, if so return counter + 1
+3) When we reach the last leaf return the counter.
+Running time: O(n) one pass on the array. because on every iteration we start the iteration from the index
+    after the max jump on the prev leaf.
+
+bucketWalk:
+Dynamic Programming.
+1) Initialize an array size n+1.
+2) Fill the array from 0 to n. For 0 and 1 fill 1 - the option is 1. For 2<=k<=n - sum the  two options,
+    fill one bucket + the k-1 solution or fill 2 buckets + the k-2 solution.
+3) Return array[n].
+Running time: O(n) one pass to fill the array and for every iteration O(1). In total O(n).
+
+numTrees:
+Dynamic Programming.
+1) Initialize an array size n+1.
+2) Fill the array from 0 to n. For 0 and 1 fill 1 - the option is 1. For 2<=k<=n -
+    sum for 0<=j<=k the options for subtree with j nodes multiply by the option for subtree with k-j nodes.
+3) Return array[n].
+Running time: O(n) one pass to fill the array and for every iteration O(n). In total O(n^2).

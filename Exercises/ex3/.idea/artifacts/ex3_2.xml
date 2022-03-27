@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="ex3_2">
+    <output-path>$PROJECT_DIR$/out/artifacts/ex3_2</output-path>
+    <root id="archive" name="ex3_2.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/src/README" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,164 @@
+hilla_heimberg
+yair.shtern
+
+
+=========================================================================================
+=        An explanation about the differences between the two UML diagrams:             =
+=========================================================================================
+In the initial UML diagram-
+we decided on a basic division of the objects that we knew would be in the game for sure while attaching to
+the API and its requirements.
+As for our free choice - from the beginning we understood that we wanted to divide the tree class into 2
+classes of leaf and stem (called tree) and knew that the leaf class will extends from gameObjects.
+
+In the final UML diagram-
+we added classes related to the bonus part.
+We have added classes for the carriable objects, the score counter and the energy progress bar - all of them
+extends from gameObject.
+We have also added a "removableObject" interface that returns the layers of the objects that implement it
+(to be exact - the objects are: leaf, carriable objects and removable block).
+We have also added another class named "RemovableBlock" that inherits from "Block" and we use it to know the
+layers of tree and the terrain (detail explanation about it is above).
+Another decision that can be seen in the final UML (unlike the initial one) is that the carriable objects we
+added in the game will inherit from "gameObject" class and implements the "RemovableObjects" interface.
+We found that this is the best way for us to create the game.
+
+Legend for the UML arrows -
+Continuous line and full arrow - inheritance.
+Dashed line and incomplete arrow - dependency.
+Dashed line and full arrow - implements of interface.
+Continuous line with full rhombus - aggregation.
+
+
+=========================================================================================
+=            An explanation about the way we made our infinite world:                   =
+=========================================================================================
+We examined the relationship between the avatar on which the camera follows to the boundaries of the screen
+and divided in two cases - the right direction and the left direction.
+In each case we added new objects on the side to which the avatar advanced and removed the objects that
+disappeared from "the player's eyes" namely from the boundaries of the screen.
+
+For the deleting objects -
+For the carriable objects we created a hashMap that saves the location and the object who in this location so
+we get quick access for deleting them. In addition, for the tree and the terrain we created HashMap which
+mapping XLocation to HashSet (the hashSet contains all the objects who associated with the current location)
+and by that way we could removes the leaves of a specific tree and the blocks of the terrain.
+
+We were able to access the object layers by getters methods and so we could delete them and only them.
+
+We have taken care of an infinite world that maintains a recoverable randomness by sending a seed that depends
+on the x-coordinate of the location where we want to produce the object. It should be noted that we send the
+same seed to all the objects in order to make "the same world" depending on this seed.
+
+
+=============================================================================================================
+=An explanation about the way we chose to implement the trees package, and why we chose this particular way:=
+=============================================================================================================
+We created a package "trees" that includes 2 classes inside - a "Tree" class and a "Leaf" class.
+We divided it in this way (so that the leaves have a separate class) in order to create "different leaves" for
+each and different tree. Namely, we wanted to grill a random amount of leaves in random locations for each
+tree separately so we thought that this partition will help us to achieve our goal in the best way.
+In addition, another reason to create a separate class for the leaves is that the leaf has its own functions
+and features like the transitions that are responsible for its falling, oscillations and restoration.
+
+
+=========================================================================================
+=  An explanation about the dilemmas or the design decisions we made during the work:   =
+=========================================================================================
+# We had a dilemma about the part of the deleting objects - about the way we will approach the layers of the
+objects we want to delete -first we thought of using tags (getTag function) but in the end we decided not to
+because it is feel to us less correctly in terms of OOP.
+In our opinion- if we relied on the tag of a particular object it can ruin the realization which is based on
+it in the Game Manger.
+So, at the end we decided that for every object we want to delete- its class will implement an interface
+("RemovableObject") that requires implementation of a getter method that returns the layer of the object.
+This interface will be for the leaves and for the extra game objects.
+
+# Regarding to the image rendering and the avatar movements - we wanted to know towards which direction the
+object went last time. So we used Enum which keeping the last direction that the avatar advanced towards it.
+
+# We added a class "RemovableBlock" for the tree class and the terrain class.
+This class inherits from a block and has a function that returns the layer of the object.
+The purpose is: when we want to create blocks that will assemble the trees (the stem to be exact)
+and the terrain we can use this additional class so that later we can get their layer.
+This class exists just for them (unlike other objects) because they are objects which consist of blocks so we
+cant get their layer directly. The solution is a specific class that returns the desired layer.
+
+Code optimization-
+* Regarding the terrain - we defined that only the first two layers of the terrain should collide with the
+avatar and the leaves. We did this by dividing the terrain into two layers - a top layer and the rest of the
+remaining layers.
+* Regarding the leaves - we defined two layers for the leaves "leafLayerBeforeFalling" and
+"leafLayerWhenFalling" for the collision between the leaves to the terrain.
+The function of the collision will be performed only on the falling leaves and by using that we saved run
+time.
+* We were debated whether to go through all the objects in the GameManager and delete the objects who exists
+at the edges but in order to save run time we decided to create for each object a data structure (type
+HashMap) that preserves the objects associated with the required location. By that way we spared us
+unnecessary passage over all the objects.
+It should be noted that the leaves are erased depending on the location of the stem to which they are
+attached.
+
+
+=========================================================================================
+=                       An explanation about the BONUS part-                            =
+=========================================================================================
+We have added for the avatar an option of clicking down.
+We added background music.
+We added more game objects - toxic fish, regular fish, coins and a counter that counts the points the avatar
+has accumulated.
+We added energy progress bar for display the avatar's energy on the screen.
+We added a goal to the game - the penguin character must collect a certain number of points in order to win
+the game without being disqualified along the way. Disqualification will be considered when the penguin
+reaches a negative number of points when the points are lowered by a toxic fish.
+We added sound for eating fish and taking coins.
+We added instructions at the beginning of the game.
+
+
+=============================
+=      File description     =
+=============================
+pepse.PepseGameManager
+- Package util-
+    pepse.util.ColorSupplier
+    pepse.util.PerlinNoise
+- Package world-
+    pepse.world.Avatar
+    pepse.world.Block
+    pepse.world.Energy
+    pepse.world.LastDirection
+    pepse.world.RemovableBlock (implements pepse.world.RemovableObject)
+    pepse.world.RemovableObject
+    pepse.world.ScoreCounter
+    pepse.world.Sky
+    pepse.world.Terrain
+    - Package carriableObjects-
+        pepse.world.carriableObjects.HandleCarriableObjects
+        pepse.world.carriableObjects.CarriableObject (implements pepse.world.RemovableObject)
+        pepse.world.carriableObjects.Coin
+        pepse.world.carriableObjects.Fish
+        pepse.world.carriableObjects.ToxicFish
+    - Package daynight-
+        pepse.world.daynight.Night
+        pepse.world.daynight.Sun
+        pepse.world.daynight.SunHalo
+    - Package trees-
+        pepse.world.trees.Leaf (implements pepse.world.RemovableObject)
+        pepse.world.trees.Tree
+
+
+=============================
+      =    Remark   =
+=============================
+PAY ATTENTION:
+There may be a situation where changing the screen size or changing the seed will cause the avatar to fall on
+a toxic fish and thus the player will be disqualified immediately. In addition, we ran the game on the
+university computers and part of the screen was hidden (in the default setting screen) and did not see the
+energy progress bar - so if you do not see the energy progress bar, we want you to enlarge the window please.
+
+We added 3 UML diagrams - "uml_before", "uml_after" (as required) and another one "simple_uml_after".
+the "simple_uml_after" is to make it more convenient to read the uml_after diagram (without the over details
+of the public things).
+
+We hope you will enjoy to play in our game :)
+HAVE A GOOD DAY :D
