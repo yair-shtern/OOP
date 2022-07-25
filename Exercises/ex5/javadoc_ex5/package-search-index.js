@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"pepse"},{"l":"pepse.util"},{"l":"pepse.world"},{"l":"pepse.world.carriableObjects"},{"l":"pepse.world.daynight"},{"l":"pepse.world.trees"}]

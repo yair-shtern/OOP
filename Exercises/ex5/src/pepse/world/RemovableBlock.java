@@ -1,6 +1,3 @@
-// USER_NAMES = hilla_heimberg , yair.shtern
-// IDS - 208916221 , 318442241
-
 package pepse.world;
 
 import danogl.gui.rendering.Renderable;

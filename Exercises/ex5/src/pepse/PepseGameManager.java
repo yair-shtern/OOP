@@ -1,6 +1,3 @@
-// USER_NAMES = hilla_heimberg , yair.shtern
-// IDS - 208916221 , 318442241
-
 package pepse;
 
 import danogl.GameManager;
@@ -70,10 +67,11 @@ public class PepseGameManager extends GameManager {
     private static final String LOSING_MESSAGE = "You lose! :(   ";
     private static final String WINNING_MESSAGE = "You won! :)   ";
     private static final String PLAY_AGAIN_MESSAGE = " Play again?";
-    private static final String OPENING_GAME_MESSAGE = "You should gain %d points by picking up fish and " +
+    private static final String OPENING_GAME_MESSAGE = "Welcome to our game!\n" +
+            "\nYou should gain %d points by picking up fish and " +
             "coins. \n Watch out from the toxic fish. \n Be aware of your energy and charge yourself on " +
             "the ground. \n *press space+shift for flying. \n *press space for jumping. \n Do you want to" +
-            " play? :D";
+            " play? :D \n\n@COPYRIGHT - Hilla Heimberg & Yair Shtern";
 
     // ------------------------------- ADDRESSES FOR SOUNDS ---------------------------------
     private static final String ASSETS_FAILING_SOUND_WAV = "assets/failingSound.wav";
