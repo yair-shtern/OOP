@@ -1,0 +1,32 @@
+Yair Shtern
+
+***********************
+*   implementation    *
+***********************
+whatever player - a random player that in each turn choose random coordinates in the board
+until they are empty, and puts it's mark there.
+
+clever player - a bit more clever player that in each turn start from the first row,
+and for every index in the row: if the index is empty puts it's mark there.
+
+snartypamts player - a player that defeats the clever player. start from the second col (top down),
+if the index is empty puts it's mark there.
+if it's not found a free place on the right side (from second col forward) return to the first col).
+
+*****************************
+*   tournaments examples    *
+*****************************
+whatever VS whatever 10000 rounds:
+=== player 1: 4984 | player 2: 4950 | draws: 66 ===
+
+clever VS whatever 500 rounds:
+=== player 1: 464 | player 2: 36 | draws: 0 ===
+
+snartypamts VS clever 500 rounds:
+=== player 1: 500 | player 2: 0 | draws: 0 ===
+
+snartypamts VS whatever 500 rounds:
+=== player 1: 474 | player 2: 26 | draws: 0 ===
+
+(clever VS clever 500 rounds: [250, 250, 0].
+snartypamts VS snartypamts 500 rounds: [250, 250, 0].)

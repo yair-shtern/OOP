@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="ex2_2">
+    <output-path>$PROJECT_DIR$/out/artifacts/ex2_2</output-path>
+    <root id="archive" name="ex2_2.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/src/Board.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/Game.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/Mark.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/HumanPlayer.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/Player.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/CleverPlayer.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/PlayerFactory.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/RendererFactory.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/SnartypamtsPlayer.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/Tournament.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/VoidRenderer.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/WhateverPlayer.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/README" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/Renderer.java" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/ConsoleRenderer.java" />
+    </root>
+  </artifact>
+</component>

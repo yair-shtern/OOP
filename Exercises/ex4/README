@@ -1,0 +1,42 @@
+Yair Shtern
+
+***********************************
+*     implementations details     *
+***********************************
+ex4_1:
+- For every char in the Character array I calculated the brightness.
+- I separated the image to sub images and for every sub image I calculated it's average brightness.
+- For each sub image I found the index of the char with the closest brightness and updated the current
+    value in the return array with the char in the chars array on this index.
+
+ex4_2:
+I used a HashMap for mapping every sub image of the image to its average brightness.
+This will save running time whenever we want to render the image again.
+
+
+************************************
+*            ascii_art.Algorithms            *
+************************************
+findDuplicate:
+First, a distinction: because given that each member of the array is in the range of values 1-N and the array
+is N + 1, we will look at the array as a linked list, and go through the array according to indexes that are
+themselves values in the array.
+So, I go throw the array two times, at first to find the "cycle" in it and I did it by keeping two variables
+one that go one step at the time and the other two steps and when they are equal it's mean that we found the
+cycle. In the second passage, I initialize only one of the variables and go throw the array with both of
+them one step at the time until they are equal. In the end I returned the duplicate value.
+run time: O(n) - two passages on the array.
+space: O(1) space - use of 2 variables.
+
+uniqueMorseRepresentations:
+1) map the a-z to its morse code to hash map.
+2) go throw the words and for each word find its morse code and store the code into a set,
+so there will not be a duplicates.
+3) in the end, return the set size which is the number of unique morse codes
+run time: O(s) - map the a-z takes O(26) = O(1). one passage on the words O(s). In total O(s).
+
+
+********************************
+*           remarks            *
+********************************
+I added a ascii image, I hope you will like it.
