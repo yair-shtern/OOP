@@ -1,7 +1,7 @@
 # Object Oriented Programming
 
 
-#### PenguinGame
+### PenguinGame
 The last exercise of this course was to create an avatar game.
 My colleague and I created a PinguinGame.
 The main challenge was to create an endless world that doesn't change.
